@@ -1,100 +1,78 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
-    // Variables
-    var geralt;
-    var ciri;
-    var yennefer;
-    var drowner;
-    var leshen;
-    var noon;
-
-    var characterSelection = [];
-    var character = null;
-    var defenders = [];
-    var defender = null;
-
-    // Start Game
-
-    function startGame() {
-
-    // Charater Info
-
-        geralt = {
-            id: 0,
+        // Charater Info
+    var characters = {
+        "geralt" : {
             name: "Geralt of Rivia",
-            healthPoints: 130,
-            baseAttack: 10,
-            attackpower: 10,
-            counterAttackPower: 10,
-    
-        }
+            health: 130,
+            Attack: 10,
+            counterAttack: 9,
+            imgUrl:"assets/images/geralt.jfjf"
+        },
 
-        ciri = {
-			id: 1,
+        "ciri" : {
 			name: "Cirilla Fiona Elen Riannon",
-			healthPoints: 120,
-			baseAttack: 10,
-			attackPower: 9,
-            counterAttackPower: 8,
-            
-        }
+			health: 120,
+			attack: 9,
+            counterAttack: 8,
+            imgUrl:"assets/images/ciri.jfif"
+        },
        
-        yennefer = {
-            id: 2,
+        "yennefer" : {
             name: " Yennefer of Vengerberg",
-            healthPoints: 120,
-            baseAttack: 9,
-            attackPower: 9,
-            counterAttackPower: 9,
+            health: 120,
+            attack: 9,
+            counterAttack: 8,
+            imgUrl:"assets/images/yennefer.jfif"
+        },
 
-        }
-
-        drowner = {
-			id: 3,
+        "drowner" : {
 			name: "Drowner",
-			healthPoints: 100,
-			baseAttack: 7,
-			attackPower: 6,
-            counterAttackPower: 5,
+			health: 100,
+			attack: 7,
+            counterAttack: 6,
+            imgUrl:"assets/images/drowner.jfif"
+        },
 
-        }
-
-        leshen = {
-            id: 4,
+        "leshen" : {
             name: "Leshen",
-            healthPoints: 100,
-            baseAttack: 10,
-            attackPower: 9,
-            counterAttackPower: 7,
+            health: 130,
+            attack: 10,
+            counterAttack: 8,
+            imgUrl:"assets/images/leshen.jfif"
+        }, 
 
-        }
-
-        noon = {
-            id: 5,
+        "noon" : {
             name: "Noonwraith",
-            healthPoints: 100,
-            baseAttack: 8,
-            attackPower: 8,
-            counterAttackPower: 5,
-
+            health: 120,
+            attack: 8,
+            counterAttack: 8,
+            imgUrl:"assets/images/noon.jfif"
         }
+    };
+    console.log(characters);
 
-        // reset character selected
-		character = null;
+    // This function will render the character to the page and the appropriate areas.
+    var renderOne = function(character, renderArea){
+        var charDiv = $("<div class=`character` data-name=`" + character.name +"`>");
+        var charName = $("<div class= `character-name`>").text(character.name);
+        var charImage = $("<img alt=`image` class=`character-images`>").attr("src", character.imageUrl);
+        var charHealth = $("div class=`character-health`>").text(character.health);
+        charDiv.append(charName).append(charImage).append(charHealth);
+        $(renderArea).append(charDiv);
+    }
 
-		// reset enemies array
-		defenders = [];
+    var renderCharacters = function(charObj, areaRender) {
+        if (areaRender === "#character-selection") {
+         $(areaRender).empty();
+            for (var key in charObj) {
+                if (charObj.hasOwnProperty(key)) {
+                    CanvasRenderingContext2D(charObj[key], areaRender);
+                    }
+                }
+            }
+        }
+     renderCharacters(characters, "#characters-selection");
+});
 
-		// reset enemy selected
-		defender = null;
-
-		// reset character selections
-		characterSelection = [geralt, ciri, yennefer, drowner, leshen, noon];
-
-		// clears all character divs
-		$("#character").empty();
-		$("#defenderArea").empty();
-		$("#defender").empty();
-        $("#status").empty();
-        
-    })
+     

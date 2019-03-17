@@ -6,45 +6,44 @@
    <title>Witcher Game</title> 
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+   <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+   <script type="text/javascript" src="assets/javascript/game.js"></script>
 </head>
 
 <body>
    
-   <div class="container">
-            <div id="characterSelection">
-            </div>
-            <div class="col-lg-6">
-               <h2>Your Character</h2>
-               <div id="character">
-                  
-               </div>
-               <h2>Fight Section</h2>
-               <div id="fightSection">
-                  <button id="attack" class="btn btn-danger">Attack!</button>
-               </div>
-               
-               <div id="status">
-               </div>
-      
-               <button id="restart" class="btn btn-success">Restart</button>
-            </div>
-            <div class="col-lg-6">
-               <h2>Defender</h2>
-               <div id="defender">
-               </div>
-               <h2>Enemies</h2>
-               <div id="defenderArea">
-      
-               </div>
-            </div>
-            
+   <div class = "main-section-title">Witcher 3 RPG</div>
+      <div id="main-game-section">
+         <!-- where the character are available-->
+         <div id="charaters-selection">
+            <div class="selection-title">Select Your Charater</div>
          </div>
-   
 
-<script type="text/javascript" src="assets/javascript/game.js"></script>
+        <div id="selected-character-selection">
+           <div class="selection-title">Your Character</div>
+           <!--Your Selected Character-->
+           <div id="selected-character"></div>
 
+           <div id="available-section">
+              <div class="section-title">Enemys Left</div>
+              <!--Enemy left-->
+           </div>
+
+           <div class="selection-title">Fight</div>
+           <div id="fight">
+            <button id="attack" class="btn btn-danger">Attack!</button>
+           </div>
+
+           <div id="action">
+              <div class="character-selection">
+                 <div class="section-title">Defender</div>
+                 <!--Enemy that you are fighting-->
+                 <div id="defender"></div>
+              </div>
+           </div>
+      </div>
+      <div id="game-message"></div>
 </body>
 
 </html>

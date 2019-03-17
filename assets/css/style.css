@@ -1,15 +1,19 @@
-html {
-    background: url('../images/background.jpeg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-h1, h2 {
-	color: #000000;
-}
-
 body {
-	background-color: transparent;
+	background: url('../images/background.jpeg') no-repeat;
+	background-size: 100%;
+	image-rendering: pixelated;
+	font-family: 'Courier New', Courier, monospace;
+
 }
+
+.section-title {
+	font-size: 200%;
+	color: blue;
+}
+
+.main-section-title {
+	font-size: 300%;
+	text-align: center;
+	color: black;
+}
+
