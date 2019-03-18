@@ -59,7 +59,7 @@ $(document).ready(function() {
     console.log(characters);
 
     var currSelectedCharacter;
-    var defender = [];
+    var combatants = [];
     var currDefender;
     var turnCounter = 1;
     var killCount = 0;
@@ -84,6 +84,7 @@ $(document).ready(function() {
         }
 };
 
+ //  render game message
 var renderMessage = function(message) {
 
     var gameMessageSet = $("#game-message");
@@ -94,18 +95,19 @@ var renderMessage = function(message) {
         gameMessageSet.text("");
     }
 }
-    // selected character
+    // render selected character
     var renderCharacters = function(charObj, areaRender) {
         
         if (areaRender === "#characters-section") {
          $(areaRender).empty();
+
             for (var key in charObj) {
                 if (charObj.hasOwnProperty(key)) {
                     renderOne(charObj[key], areaRender, "");
                     }
                 }
             }
-        
+         // render enemy
         if(areaRender === "#selected-character"){
             renderOne(charObj, areaRender, "");
         }
@@ -116,6 +118,7 @@ var renderMessage = function(message) {
                 renderOne(charObj[i], areaRender, "enemy");
             }
        
+
                 // on click for enemy
             $(document).on("click", ".enemy", function() {
                 var name = ($(this).attr("data-name"));
@@ -130,9 +133,9 @@ var renderMessage = function(message) {
             // enemy 
         if (areaRender === "#defender") {
             $(areaRender).empty();
-            for (var i = 0; i < defender.lenght; i++) {
-                if (defender[i].name === charObj) {
-                    renderOne(defender, areaRender, "defender");
+            for (var i = 0; i < combatants.lenght; i++) {
+                if (combatants[i].name === charObj) {
+                    renderOne(combatants, areaRender, "defender");
                 }
             }
         }
@@ -143,7 +146,7 @@ var renderMessage = function(message) {
             renderOne(charObj, "#defender", "defender");
         }
         // rerender when character is attacked
-        if (areaRender --- "enemyDamage") {
+        if (areaRender === "enemyDamage") {
             $("#selected-character").empty();
             renderOne(charObj, "#selected-character", "");
         }
@@ -182,13 +185,14 @@ var renderMessage = function(message) {
 
            for (var key in characters) {
                if (key !== name){
-               defender.push(characters[key]); 
+               combatants.push(characters[key]); 
                }
            } 
+          
            $("#characters-selection").hide();
 
-           renderCharacters(currSelectedCharacter, "#selected-charater");
-           renderCharacters(defender, "#available-to-attack-section");
+           renderCharacters(currSelectedCharacter, "#selected-character");
+           renderCharacters(combatants, "#available-to-attack-section");
         }
      });
 

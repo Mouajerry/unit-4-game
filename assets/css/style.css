@@ -14,13 +14,13 @@ img {
 
 .section-title {
 	font-size: 200%;
-	color: blue;
+	color: red;
 }
 
 .main-section-title {
-	font-size: 300%;
+	font-size: 500%;
 	text-align: center;
-	color: black;
+	color: red;
 }
 
 .character {
