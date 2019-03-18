@@ -7,21 +7,19 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-   <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-   <script type="text/javascript" src="assets/javascript/game.js"></script>
 </head>
 
 <body>
    
-   <div class = "main-section-title">Witcher 3 RPG</div>
+   <div class ="main-section-title">Witcher 3 RPG</div>
       <div id="main-game-section">
          <!-- where the character are available-->
-         <div id="charaters-selection">
-            <div class="selection-title">Select Your Charater</div>
+         <div id="characters-section">
+            <div class="section-title">Select Your Charater</div>
          </div>
 
-        <div id="selected-character-selection">
-           <div class="selection-title">Your Character</div>
+        <div id="selected-character-section">
+           <div class="section-title">Your Character</div>
            <!--Your Selected Character-->
            <div id="selected-character"></div>
 
@@ -31,12 +29,12 @@
            </div>
 
            <div class="selection-title">Fight</div>
-           <div id="fight">
-            <button id="attack" class="btn btn-danger">Attack!</button>
+           <div id="fight-section">
+            <button id="attack-button">Attack!</button>
            </div>
 
            <div id="action">
-              <div class="character-selection">
+              <div class="character-section">
                  <div class="section-title">Defender</div>
                  <!--Enemy that you are fighting-->
                  <div id="defender"></div>
@@ -44,6 +42,10 @@
            </div>
       </div>
       <div id="game-message"></div>
+      
+      
+      <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="assets/javascript/game.js"></script>
 </body>
 
 </html>
