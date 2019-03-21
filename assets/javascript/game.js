@@ -3,62 +3,56 @@ $(document).ready(function() {
     // Charater Info
 var characters = {
     "geralt" : {
-        shortName: "geralt",
-        name: "Geralt of Rivia",
-        health: 130,
-        Attack: 10,
+        name: "geralt",
+        health: 140,
+        Attack: 9,
         imageUrl: "assets/images/geralt.jpeg",
-        counterAttack: 9,
+        counterAttack: 10
         
     },
 
     "ciri" : {
-        shortName: "ciri",
-        name: "Cirilla Fiona Elen Riannon",
-        health: 120,
+        name: "ciri",
+        health: 130,
         attack: 9,
         imageUrl: "assets/images/ciri.jpeg",
-        counterAttack: 8
+        counterAttack: 10
         
     },
    
     "yennefer" : {
-        shortName: "ciri",
-        name: " Yennefer of Vengerberg",
-        health: 120,
+        name: "yennefer",
+        health: 140,
         attack: 9,
         imageUrl: "assets/images/yennefer.jpeg",
-        counterAttack: 8
+        counterAttack: 10
         
     },
 
     "drowner" : {
-        shortName: "drowner",
-        name: "Drowner",
-        health: 100,
+        name: "drowner",
+        health: 120,
         attack: 7,
         imageUrl: "assets/images/drowner.jpeg",
-        counterAttack: 6
+        counterAttack: 10
         
     },
 
     "leshen" : {
-        shortName: "leshen",
-        name: "Leshen",
-        health: 130,
-        attack: 10,
+        name: "leshen",
+        health: 150,
+        attack: 9,
         imageUrl: "assets/images/leshen.jpeg",
-        counterAttack: 8
+        counterAttack: 10
         
     }, 
 
     "noon" : {
-        shortName: "noon",
-        name: "Noonwraith",
-        health: 120,
+        name: "noon",
+        health: 130,
         attack: 8,
         imageUrl: "assets/images/noon.jpeg",
-        counterAttack: 8
+        counterAttack: 10
         
     }
 };
@@ -66,29 +60,44 @@ console.log(characters);
 
 var currSelectedCharacter;
 var combatants = [];
-var currDefender;
+var defender;
 var turnCounter = 1;
 var killCount = 0;
 
 
 // This function will render the character to the page and the appropriate areas.
-var renderOne = function(character, renderArea, charStatus) {
-    var charDiv = $("<div class='character' data-name='" + character.shortName + "'>");
+var renderCharacter = function(character, renderArea) {
+    var charDiv = $("<div class='character' data-name='" + character.name + "'>");
     var charName = $("<div class='character-name'>").text(character.name);
     var charImage = $("<img alt='image' class='character-image'>").attr("src", character.imageUrl);
     var charHealth = $("<div class='character-health'>").text(character.health);
     charDiv.append(charName).append(charImage).append(charHealth);
     $(renderArea).append(charDiv);
-
-        // if the character is the enemy
-    if (charStatus === "enemy") {
-        $(charDiv).addClass("enemy");
-    }
-    else if (charStatus === "defender") {
-        currDefender = character;
-        $(charDiv).addClass("target-enemy");
-    }
 };
+
+// This function will load all characters
+var initializeGame = function() {
+    // Loop through the characters object and call the renderCharacter function on each character to render their card.
+    for (var key in characters) {
+      renderCharacter(characters[key], "#characters-section");
+    }
+  };
+
+  initializeGame();
+
+  var updateCharacter = function(charObj, areaRender) {
+
+    $(areaRender).empty();
+    renderCharacter(charObj, areaRender);
+  };
+
+  // This function will render the available-to-attack enemies. This should be run once after a character has been selected
+  var renderEnemies = function(enemyArr) {
+    for (var i = 0; i < enemyArr.length; i++) {
+      renderCharacter(enemyArr[i], "#available-to-attack-section");
+    }
+  };
+
 
 //  render game message
 var renderMessage = function(message) {
@@ -100,153 +109,118 @@ gameMessageSet.append(newMessage);
 if (message === "clearMessage") {
     gameMessageSet.text("");
 }
-}
-// render selected character
-var renderCharacters = function(charObj, areaRender) {
-    
-    if (areaRender === "#characters-section") {
-     $(areaRender).empty();
-
-        for (var key in charObj) {
-            if (charObj.hasOwnProperty(key)) {
-                renderOne(charObj[key], areaRender, "");
-                }
-            }
-        }
-     // render enemy
-    if(areaRender === "#selected-character"){
-        renderOne(charObj, areaRender, "");
-    }
-    // enemy's still availiable
-    if (areaRender === "#available-to-attack-section") {
-        
-        for(var i = 0; i < charObj.length; i++) {
-            renderOne(charObj[i], areaRender, "enemy");
-        }
-   
-
-            // on click for enemy
-        $(document).on("click", ".enemy", function() {
-            var name = ($(this).attr("data-name"));
-
-            if ($("#defender").children().length === 0) {
-                renderCharacters(name, "#defender");
-                $(this).hide();
-                renderMessage("clearMessage");
-            }
-        });
-    }
-        // enemy 
-    if (areaRender === "#defender") {
-        $(areaRender).empty();
-        for (var i = 0; i < combatants.lenght; i++) {
-            if (combatants[i].name === charObj) {
-                renderOne(combatants, areaRender, "defender");
-            }
-        }
-    }
-
-    // rerender when defender is attacked
-    if (areaRender === "playerDamage") {
-        $("#defender").empty();
-        renderOne(charObj, "#defender", "defender");
-    }
-    // rerender when character is attacked
-    if (areaRender === "enemyDamage") {
-        $("#selected-character").empty();
-        renderOne(charObj, "#selected-character", "");
-    }
-
-    if (areaRender === "enemyDefeated") {
-        $("#defender").empty();
-        var gameStateMessage = ("You have Defeated " + charObj.name + ", you can fight again.");
-        renderMessage(gameStateMessage);
-    }
 };
 
-var restartGame = function(inputEndGame) {
+var restartGame = function(resultMessage) {
     // Restart button to reset game
     var restart = $("<button>Restart</button>").click(function(){
         location.reload();
     });
     
     // Displat win/lose message
-    var gameState = $("<div>").text(inputEndGame);
+    var gameState = $("<div>").text(resultMessage);
 
     $("body").append(gameState);
     $("body").append(restart);
 };
 
-    //render all characters
- renderCharacters(characters, "#characters-section");
+ // Function to clear the game message section
+ var clearMessage = function() {
+    var gameMessage = $("#game-message");
 
-    // On click event for the pictures
- $(document).on("click", ".character", function () {
+    gameMessage.text("");
+  };
 
+
+// click event selected character
+$("#characters-section").on("click", ".character", function() {
     var name = $(this).attr("data-name");
 
     if (!currSelectedCharacter) {
-
         currSelectedCharacter = characters[name];
+        for (var key in characters) {
+            if (key !== name) {
+              combatants.push(characters[key]);
+            }
+     }
 
-       for (var key in characters) {
-           if (key !== name){
-           combatants.push(characters[key]); 
-           }
-       } 
-      
-       $("#characters-selection").hide();
+     $("#characters-section").hide();
 
-       renderCharacters(currSelectedCharacter, "#selected-character");
-       renderCharacters(combatants, "#available-to-attack-section");
-    }
+     updateCharacter(currSelectedCharacter, "#selected-character");
+     renderEnemies(combatants);
+   }
  });
+
+ // Creates an on click event for each enemy.
+ $("#available-to-attack-section").on("click", ".character", function() {
+    // Saving the opponent's name.
+    var name = $(this).attr("data-name");
+
+    if ($("#defender").children().length === 0) {
+        defender = characters[name];
+        updateCharacter(defender, "#defender");
+  
+        $(this).remove();
+        clearMessage();
+      }
+    });
+
 
  $("#attack-button").on("click", function(){
 
-    if ($("#defender").children().lenght !== 0) {
+    if ($("#defender").children().length !== 0) {
 
-        var attackedMessage = "You attacked " + currDefender.name + " for " + (currSelectedCharacter.attack * turnCounter) + "damage.";
-        var counterAttackMessage = currDefender.name + " Attacked you back for " + (currDefender.counterAttack * turnCounter) + "damage.";
-        renderMessage("clearMessage");
+        var attackMessage = "You attacked " + defender.name + " for " + currSelectedCharacter.attack * turnCounter + " damage.";
+      var counterAttackMessage = defender.name + " attacked you back for " + defender.counterAttack + " damage.";
+      clearMessage();
+
 
         // reduce your enemy's health by your attack
-        currDefender.health -= (currSelectedCharacter.attack * turnCounter);
+        defender.health -= currSelectedCharacter.attack * turnCounter;
 
         // if enemy isn't dead
-        if (currDefender.health > 0) {
-            renderCharacters(currDefender, "playerDamage");
+        if (defender.health > 0) {
+            updateCharacter(defender, "#defender");
 
-            renderMessage(attackedMessage);
+            renderMessage(attackMessage);
             renderMessage(counterAttackMessage);
 
             // reduce life points when attacked back
-            currSelectedCharacter.health -= currDefender.counterAttack;
+            currSelectedCharacter.health -= defender.counterAttack;
 
-            renderCharacters(currSelectedCharacter, "enemyDamage");
+            updateCharacter(currSelectedCharacter, "#selected-character");
 
             if (currSelectedCharacter.health <= 0) {
-                renderMessage("clearMessage");
+                    clearMessage();
                 restartGame("You have been Defeated...");
-                $("#attack-button").unbind("click");
+                $("#attack-button").off("click");
             }
-
-
         }
-    }
     // if enemy has less than health
     else {
-        renderCharacters(currDefender, "enemyDefeated");
+        $("#defender").empty();
+
+        var gameStateMessage = "You have defeated " + defender.name + ", you can choose to fight another enemy.";
+        renderMessage(gameStateMessage);
+
 
         // increase kill count
         killCount++;
 
         // if killed all enemy you win
-        if (killCount >= 5) {
-            renderMessage("clearMessage");
-            restartGame("You Win!");
+        if (killCount >= combatants.length) {
+            clearMessage();
+          $("#attack-button").off("click");
+          restartGame("You Win!");
+
         }
     }
     turnCounter++;
+}
+    else {
+        // If there is no defender, render an error message.
+        clearMessage();
+        renderMessage("No enemy here.");
+    }
  });
 });
