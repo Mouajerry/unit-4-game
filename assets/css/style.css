@@ -1,6 +1,7 @@
 body {
 	background: url('../images/background3.jpeg') no-repeat;
 	font-family: 'Courier New', Courier, monospace;
+	background-attachment: fixed;
 
 }
 
