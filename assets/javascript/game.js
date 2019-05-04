@@ -5,7 +5,7 @@ var characters = {
     "geralt" : {
         name: "geralt",
         health: 140,
-        Attack: 9,
+        attack: 9,
         imageUrl: "assets/images/geralt.jpeg",
         counterAttack: 10
         
@@ -15,7 +15,7 @@ var characters = {
         name: "ciri",
         health: 130,
         attack: 9,
-        imageUrl: "assets/images/ciri.jpeg",
+        imageUrl: "assets/images/ciri.jpg",
         counterAttack: 10
         
     },
@@ -33,7 +33,7 @@ var characters = {
         name: "drowner",
         health: 120,
         attack: 7,
-        imageUrl: "assets/images/drowner.jpeg",
+        imageUrl: "assets/images/drowner.jpg",
         counterAttack: 10
         
     },
